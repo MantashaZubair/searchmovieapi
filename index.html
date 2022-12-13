@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+    <div class="row" style=" justify-content: center;">
+        <input type="search" id="search" autofocus autocomplete="off" placeholder="search here....">
+    </div>
+    <div class="row" id="movie-box">
+        <div class="box">
+            <img src="img.jpg" alt="image">
+            <div class="overlay">
+                <div class="title">
+                    <h1>title</h1>
+                    <span>9.5</span>
+                </div>
+                <h3>Overview:</h3>
+                <p>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.</p>
+            </div>
+        </div>
+    </div>
+    </main>
+    <script>
+        const moiveBox = document.getElementById("movie-box")
+        const movieapi = async(api)=>{
+            const url =`http://www.omdbapi.com/?s=${api}&apikey=976aa5ae`
+            const response=await fetch(url)
+            const data = await response.json()
+            console.log(data)
+           showmovie(data.search)
+        }
+        
+        const showmovie=(data)=>{
+            data.forEach(element => {
+                console.log(element)
+            }
+            )
+        
+    }
+        const search = document.getElementById("search")
+        search.addEventListener(
+            "keyup",
+            function(event){ 
+                movieapi(event.target.value)
+            }
+        )
+ </script>
+</body>
+</html>
