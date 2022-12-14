@@ -5,51 +5,76 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
     <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
     <main>
     <div class="row" style=" justify-content: center;">
         <input type="search" id="search" autofocus autocomplete="off" placeholder="search here....">
     </div>
-    <div class="row" id="movie-box">
-        <div class="box">
-            <img src="img.jpg" alt="image">
-            <div class="overlay">
-                <div class="title">
-                    <h1>title</h1>
-                    <span>9.5</span>
-                </div>
-                <h3>Overview:</h3>
-                <p>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.</p>
-            </div>
+        <div class="row" id="movie-box">
+       
         </div>
     </div>
     </main>
     <script>
+        const API ="http://www.omdbapi.com/?apikey=976aa5ae&s=thor"
+        const searchapi ="http://www.omdbapi.com/?apikey=976aa5ae&s="
         const moiveBox = document.getElementById("movie-box")
         const movieapi = async(api)=>{
-            const url =`http://www.omdbapi.com/?s=${api}&apikey=976aa5ae`
-            const response=await fetch(url)
+   
+            const response=await fetch(api)
             const data = await response.json()
             console.log(data)
-           showmovie(data.search)
+           showmovie(data.Search)
+           
         }
-        
-        const showmovie=(data)=>{
-            data.forEach(element => {
-                console.log(element)
+        const showmovie =(data)=>{
+            //console.log(data)
+            moiveBox.innerHTML=""
+            if(data.error==404){
+                moiveBox.innerHTML =`<h1>not</h1>`
             }
-            )
-        
+           data.forEach((item) => {
+            console.log(item)
+            const imagePath = item.Poster === "N/A" ? "img.jpg" : item.Poster;
+
+            const box = document.createElement("div")
+            box.classList.add("box")
+            box.innerHTML=`
+          
+                
+            <img src="${imagePath}" alt="imagenot found">
+            <div class="overlay">
+                <div class="title">
+                    <h1>${item.Title}</h1>
+                    <span>${item.Year}</span>
+                </div>
+                <h3>Overview:</h3>
+                <p>Title : ${item.Title}</p>
+                <p>Type : ${item.Type}</p>
+                <p>Year : ${item.Year}</p>
+                <p>imdbId : ${item.imdbID}</p>
+            </div>`;
+            moiveBox.appendChild(box)
+           });
+        }
+ document.getElementById("search").addEventListener(
+    "keyup",
+    function(event){
+        if(event.target.value!=""){
+            movieapi( searchapi +event.target.value) 
+            
+        } else{
+            movieapi(API)
+        }
     }
-        const search = document.getElementById("search")
-        search.addEventListener(
-            "keyup",
-            function(event){ 
-                movieapi(event.target.value)
-            }
-        )
+ )
+          movieapi(API)
+
  </script>
 </body>
 </html>

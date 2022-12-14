@@ -7,13 +7,14 @@ main{
 width: 100%;
 min-height: 100vh;
 background-color: black;
+
 }
 .row{
   
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
+   
    
    
 }
@@ -44,7 +45,7 @@ background-color: black;
     padding: 10px;
     overflow: hidden;
     position: relative;
-    flex-basis: 25%;
+    
 
 }
 .box img{
